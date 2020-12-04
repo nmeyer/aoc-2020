@@ -1,4 +1,4 @@
-const _ = require('underscore');
+import { reduce } from 'underscore';
 
 const trees = [
     '....##..#........##...#.#..#.##',
@@ -350,4 +350,4 @@ function treesEncountered(slope) {
 }
 
 // multiply trees encountered at each slope setting together
-console.log(`Answer: ${_.reduce(slopes, (memo, slope) => memo * treesEncountered(slope), 1)}`);
+console.log(`Answer: ${reduce(slopes, (memo, slope) => memo * treesEncountered(slope), 1)}`);
