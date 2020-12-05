@@ -758,7 +758,8 @@ const input = [
 ];
 
 function binarySearch(lowCode, highCode) {
-    var curried = function (low, high, boardingPass) {
+    
+    return function curried(low, high, boardingPass) {
         // console.log(`Range: ${low}:${high} ${boardingPass[0]}`);
         if (low === high)
             return low;
@@ -769,7 +770,7 @@ function binarySearch(lowCode, highCode) {
             return curried(Math.ceil((high - low) / 2 + low), high, boardingPass.substr(1));
         }
     }
-    return curried; 
+
 }
 
 let getRow = binarySearch('F', 'B');
