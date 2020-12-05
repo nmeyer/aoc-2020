@@ -757,39 +757,23 @@ const input = [
     'BFFBFFFRLL'
 ];
 
-function getRow(low, high, boardingPass) {
-    // console.log(`Range: ${low}:${high} ${boardingPass[0]}`);
-    
-    if (low === high)
-    return low;
+function binarySearch(lowCode, highCode) {
+    var curried = function (low, high, boardingPass) {
+        // console.log(`Range: ${low}:${high} ${boardingPass[0]}`);
+        if (low === high)
+            return low;
 
-    if (boardingPass[0] === 'F') {
-        return getRow(low, Math.floor((high - low) / 2 + low), boardingPass.substr(1));
-    } else if (boardingPass[0] === 'B') {
-        return getRow(Math.ceil((high - low) / 2 + low), high, boardingPass.substr(1));
-    } else {
-        console.error('Wtf');
+        if (boardingPass[0] === lowCode) {
+            return curried(low, Math.floor((high - low) / 2 + low), boardingPass.substr(1));
+        } else if (boardingPass[0] === highCode) {
+            return curried(Math.ceil((high - low) / 2 + low), high, boardingPass.substr(1));
+        }
     }
+    return curried; 
 }
 
-function getCol(low, high, boardingPass) {
-    // console.log(`Range: ${low}:${high} ${boardingPass[0]}`);
-    
-    if (low === high)
-        return low;
-    
-    if (boardingPass[0] === 'L') {
-        return getCol(low, Math.floor((high - low) / 2 + low), boardingPass.substr(1));
-    } else if (boardingPass[0] === 'R') {
-        return getCol(Math.ceil((high - low) / 2 + low), high, boardingPass.substr(1));
-    } else {
-        console.error('Wtf');
-    }
-}
-
-
-getRow(0, 127, 'FBFBBFF'); //?
-getCol(0, 7, 'RLR'); //?
+let getRow = binarySearch('F', 'B');
+let getCol = binarySearch('L', 'R');
 
 function seatId(boardingPass) {
     var row = getRow(0, 127, boardingPass.substr(0,7));
@@ -797,34 +781,20 @@ function seatId(boardingPass) {
     return row * 8 + col;
 }
 
-// seatId(input[0]); //?
-// seatId(input[1]); //?
-// seatId(input[2]); //?
-
-// part 1
-// var highest = 0;
-// // for (var boardingPass of input) {
-// //     let id = seatId(boardingPass);
-// //     if (id > highest) {
-// //         highest = id;
-// //     }
-// // }
-// highest //?
-
-// part2
-var ids = {};
+// Solve the Problem
+var highest = 0,
+    ids = {};
 for (var boardingPass of input) {
     let id = seatId(boardingPass);
     ids[id] = true;
-}
-
-for (var i = 126; i <= 827; i++) {
-    if (!(i in ids)) {
-        console.error(`${i} not in ids!`);
+    if (id > highest) {
+        highest = id;
     }
-    // else {
-    //     console.log(`Found ${i} in ids`);
-    // }
 }
+console.log(`Answer [a]: ${highest} is the highest seat id we found.`); //?
 
-
+for (var i = 126; i <= 826; i++) {
+    if (!(i in ids)) {
+        console.error(`Answer [b]: Seat id ${i} is not taken! It's yours.`);
+    }
+}
