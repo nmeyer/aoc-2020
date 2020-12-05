@@ -792,10 +792,10 @@ for (var boardingPass of input) {
         highest = id;
     }
 }
-console.log(`Answer [a]: ${highest} is the highest seat id we found.`); //?
+console.log(`Answer [a]: ${highest} is the highest seat id we found.`);
 
 for (var i = 126; i <= 826; i++) {
     if (!(i in ids)) {
-        console.error(`Answer [b]: Seat id ${i} is not taken! It's yours.`);
+        console.log(`Answer [b]: Seat id ${i} is not taken! It's yours.`);
     }
 }
