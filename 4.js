@@ -285,13 +285,13 @@ const required = {
             (59 <= height && height <= 76));
     } ,
     'hcl': function (value) { 
-        return value.match('^#[0-9a-f]{6}$') !== null; 
+        return /^#[0-9a-f]{6}$/.test(value);
     } ,
     'ecl': function (value) {
         return ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(value);
     } ,
     'pid': function (value) {
-        return value.match('^[0-9]{9}$') !== null;
+        return /^[0-9]{9}$/.test(value);
     } 
 };
 required['byr']('2027') //?
