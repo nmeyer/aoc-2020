@@ -757,29 +757,32 @@ const input = [
     'BFFBFFFRLL'
 ];
 
-function binarySearch(lowCode, highCode) {
+// function binarySearch(lowCode, highCode) {
     
-    return function curried(low, high, boardingPass) {
-        // console.log(`Range: ${low}:${high} ${boardingPass[0]}`);
-        if (low === high)
-            return low;
+//     return function curried(low, high, boardingPass) {
+//         // console.log(`Range: ${low}:${high} ${boardingPass[0]}`);
+//         if (low === high)
+//             return low;
 
-        if (boardingPass[0] === lowCode) {
-            return curried(low, Math.floor((high - low) / 2 + low), boardingPass.substr(1));
-        } else if (boardingPass[0] === highCode) {
-            return curried(Math.ceil((high - low) / 2 + low), high, boardingPass.substr(1));
-        }
-    }
+//         if (boardingPass[0] === lowCode) {
+//             return curried(low, Math.floor((high - low) / 2 + low), boardingPass.substr(1));
+//         } else if (boardingPass[0] === highCode) {
+//             return curried(Math.ceil((high - low) / 2 + low), high, boardingPass.substr(1));
+//         }
+//     }
 
-}
+// }
 
-let getRow = binarySearch('F', 'B');
-let getCol = binarySearch('L', 'R');
+// let getRow = binarySearch('F', 'B');
+// let getCol = binarySearch('L', 'R');
 
 function seatId(boardingPass) {
-    var row = getRow(0, 127, boardingPass.substr(0,7));
-    var col = getCol(0, 7, boardingPass.substr(7));
-    return row * 8 + col;
+    // var row = getRow(0, 127, boardingPass.substr(0,7));
+    // var col = getCol(0, 7, boardingPass.substr(7));
+    // return row * 8 + col;
+    return parseInt(boardingPass
+        .replace(/[FL]/g, '0')
+        .replace(/[BR]/g, '1'), 2);
 }
 
 // Solve the Problem
