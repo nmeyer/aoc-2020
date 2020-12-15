@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "immutable": "^4.0.0-rc.12",
+    "underscore": "^1.12.0"
+  }
+}
