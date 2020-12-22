@@ -90,6 +90,11 @@ function parseInput(input) {
         });
     }
 
+    // At first, any allergen A can be any ingredient I
+    SET_A.forEach(function (a) {
+        A_TO_I = A_TO_I.set(a, SET_I);
+    });
+
     return foods; //?
 }
 
@@ -100,12 +105,12 @@ function process(foods, a_to_i) {
     }
 
     let food = foods.first();
-    let { ingredients: i_set, allergens: a_set } = food;
+    let { 
+        ingredients: i_set, 
+        allergens: a_set 
+    } = food;
 
     for (let a of a_set) {
-        a; //?
-        a_to_i.get(a); //?
-
         // Remove all these ingredients from the possible ingredient set for this allergen
         // By starting with ALL INGREDIENTS as possible for each allergen,
         // We can just do an intersection of 2 sets to get the remaining possibilities
@@ -117,28 +122,20 @@ function process(foods, a_to_i) {
 }
 
 // Convert a_to_i to a solved i_to_a Map
-let count = 0;
 function match(a_to_i, i_to_a) {
-    count++; //?
-    a_to_i.size; //?
 
-    // if (count == 3) {
-    if (a_to_i.size == 0) {
-        // Solve evertying. GTFO.
-        i_to_a; //?
+    // Solved! GTFO.
+    if (a_to_i.size == 0)
         return i_to_a;
-    }
 
-    a_to_i; //?
     let solved = a_to_i.filter(function (i, a) {
         return i.size == 1; //?
     });
-    solved; //?
+    
     solved.map(function (i, a) {
         i = i.first(); //?
         i_to_a = i_to_a.set(i, a);
-        a_to_i = a_to_i.delete(a); //?
-        a_to_i.get(a); //?
+        a_to_i = a_to_i.delete(a);
 
         // Remove i (ingredient) from all the other allergens' i_sets
         a_to_i = a_to_i.map(function (v, k) {
@@ -147,11 +144,6 @@ function match(a_to_i, i_to_a) {
 
     });
 
-    i_to_a; //?
-
-    // What allergens are left?
-    a_to_i.size; //?
-
     return match(a_to_i, i_to_a);
 }
 
@@ -159,19 +151,13 @@ function match(a_to_i, i_to_a) {
 
 FOODS = parseInput(FULL_INPUT); //?
 
-SET_A.forEach(function (a) { A_TO_I = A_TO_I.set(a, SET_I) });
-
 const PROCESSED = process(FOODS, A_TO_I); //?
-const BAD_I = PROCESSED.valueSeq()
-    .reduce((bad, i) => bad.union(i)); //?
-const GOOD_I = SET_I.subtract(BAD_I); //?
-
-PROCESSED.get('soy'); //?
 
 let matches = match(PROCESSED, Map()); //?
 let answer = matches
     .sort()
     .keySeq()
     .toArray()
-    .join(',')
-answer; //?
+    .join(',');
+
+console.log(answer); //?
